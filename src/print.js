@@ -4,12 +4,11 @@ const {
   hardline,
   indent,
   join,
-  line,
   softline
 } = require("prettier").doc.builders;
 
 const genericPrint = (path, opts, print) => {
-  const { type, value } = path.getValue();
+  const { type } = path.getValue();
 
   switch (type) {
     case "+":
@@ -19,7 +18,7 @@ const genericPrint = (path, opts, print) => {
     case ".":
     case ",":
       return type;
-    case "[]":
+    case "loop":
       return group(concat([
         "[",
         indent(concat([

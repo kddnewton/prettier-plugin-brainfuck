@@ -12,16 +12,18 @@ const getValue = text => {
       index += 1;
     } else if (char === "[") {
       let matched = 0;
-      const endIndex = text.slice(index).split("").findIndex(char => (
-        (matched += { "[": 1, "]": -1 }[char] || 0) === 0
-      ));
+
+      const endIndex = text.slice(index).split("").findIndex(nextChar => {
+        matched += { "[": 1, "]": -1 }[nextChar] || 0;
+        return matched === 0;
+      });
 
       if (endIndex === -1) {
         throw new SyntaxError("Unmatched loop");
       }
 
       value.push({
-        type: "[]",
+        type: "loop",
         start: index,
         end: index + endIndex,
         value: getValue(text.substring(index + 1, endIndex + 1))
