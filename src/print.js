@@ -19,19 +19,15 @@ const genericPrint = (path, opts, print) => {
     case ",":
       return type;
     case "loop":
-      return group(concat([
-        "[",
-        indent(concat([
-          softline,
-          join("", path.map(print, "value"))
-        ])),
-        concat([softline, "]"])
-      ]));
-    case "root": 
-      return concat([
-        join("", path.map(print, "value")),
-        hardline
-      ]);
+      return group(
+        concat([
+          "[",
+          indent(concat([softline, join("", path.map(print, "value"))])),
+          concat([softline, "]"])
+        ])
+      );
+    case "root":
+      return concat([join("", path.map(print, "value")), hardline]);
     default:
       throw new Error(`Unsupported node encountered: ${type}`);
   }

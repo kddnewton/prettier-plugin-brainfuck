@@ -13,10 +13,13 @@ const getValue = text => {
     } else if (char === "[") {
       let matched = 0;
 
-      const endIndex = text.slice(index).split("").findIndex(nextChar => {
-        matched += { "[": 1, "]": -1 }[nextChar] || 0;
-        return matched === 0;
-      });
+      const endIndex = text
+        .slice(index)
+        .split("")
+        .findIndex(nextChar => {
+          matched += { "[": 1, "]": -1 }[nextChar] || 0;
+          return matched === 0;
+        });
 
       if (endIndex === -1) {
         throw new SyntaxError("Unmatched loop");
