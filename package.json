@@ -1,0 +1,31 @@
+{
+  "name": "@prettier/plugin-brainfuck",
+  "version": "0.1.0",
+  "description": "prettier plugin for brainfuck",
+  "main": "src/plugin.js",
+  "scripts": {
+    "lint": "eslint --cache .",
+    "print": "prettier --plugin=.",
+    "test": "jest"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/prettier/plugin-brainfuck.git"
+  },
+  "author": "Kevin Deisz",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/prettier/plugin-brainfuck/issues"
+  },
+  "homepage": "https://github.com/prettier/plugin-brainfuck#readme",
+  "dependencies": {
+    "prettier": ">=1.10"
+  },
+  "devDependencies": {
+    "eslint": "^6.0.1",
+    "eslint-config-airbnb-base": "^14.0.0",
+    "eslint-config-prettier": "^6.0.0",
+    "eslint-plugin-import": "^2.16.0",
+    "jest": "^24.0.0"
+  }
+}
