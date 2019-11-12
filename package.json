@@ -1,5 +1,5 @@
 {
-  "name": "@prettier/plugin-brainfuck",
+  "name": "prettier-plugin-brainfuck",
   "version": "0.1.0",
   "description": "prettier plugin for brainfuck",
   "main": "src/plugin.js",
