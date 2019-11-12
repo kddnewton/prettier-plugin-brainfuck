@@ -11,30 +11,28 @@ const getValue = text => {
       value.push({ type: char, index });
       index += 1;
     } else if (char === "[") {
-      let matched = 0;
+      let matched = 1;
+      let endIndex = index + 1;
 
-      const endIndex = text
-        .slice(index)
-        .split("")
-        .findIndex(nextChar => {
-          matched += { "[": 1, "]": -1 }[nextChar] || 0;
-          return matched === 0;
-        });
+      while (matched !== 0 && endIndex < text.length) {
+        matched += { "[": 1, "]": -1 }[text.charAt(endIndex)] || 0;
+        endIndex += 1;
+      }
 
-      if (endIndex === -1) {
-        throw new SyntaxError("Unmatched loop");
+      if (matched !== 0) {
+        throw new SyntaxError("Unmatched start loop");
       }
 
       value.push({
         type: "loop",
         start: index,
-        end: index + endIndex,
-        value: getValue(text.substring(index + 1, endIndex + 1))
+        end: endIndex - 1,
+        value: getValue(text.slice(index + 1, endIndex - 1))
       });
 
-      index += endIndex + 1;
+      index = endIndex;
     } else if (char === "]") {
-      throw new SyntaxError("Unmatched loop");
+      throw new SyntaxError("Unmatched end loop");
     } else {
       index += 1;
     }
