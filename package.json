@@ -10,14 +10,14 @@
   },
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/prettier/plugin-brainfuck.git"
+    "url": "git+https://github.com/kddeisz/prettier-plugin-brainfuck.git"
   },
   "author": "Kevin Deisz",
   "license": "MIT",
   "bugs": {
-    "url": "https://github.com/prettier/plugin-brainfuck/issues"
+    "url": "https://github.com/kddeisz/prettier-plugin-brainfuck/issues"
   },
-  "homepage": "https://github.com/prettier/plugin-brainfuck#readme",
+  "homepage": "https://github.com/kddeisz/prettier-plugin-brainfuck#readme",
   "dependencies": {
     "prettier": ">=2.0"
   },
