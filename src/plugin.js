@@ -1,8 +1,8 @@
 const parse = require("./parse");
 const print = require("./print");
 
-const locStart = node => (node.type === "loop" ? node.start : node.index);
-const locEnd = node => (node.type === "loop" ? node.end : node.index);
+const locStart = (node) => (node.type === "loop" ? node.start : node.index);
+const locEnd = (node) => (node.type === "loop" ? node.end : node.index);
 
 const plugin = {
   languages: [

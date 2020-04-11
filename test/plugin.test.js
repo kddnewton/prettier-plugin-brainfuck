@@ -14,7 +14,7 @@ const checkFormat = (before, after) => {
 
 expect.extend({
   toChangeFormat: checkFormat,
-  toMatchFormat: before => checkFormat(before, before)
+  toMatchFormat: (before) => checkFormat(before, before)
 });
 
 describe("plugin", () => {

@@ -3,13 +3,13 @@ const readline = require("readline");
 const parse = require("./parse");
 
 const getChar = () =>
-  new Promise(resolve => {
+  new Promise((resolve) => {
     const rl = readline.createInterface({
       input: process.stdin,
       output: process.stdout
     });
 
-    rl.question("> ", input => {
+    rl.question("> ", (input) => {
       rl.close();
 
       resolve(input.charCodeAt(0));
@@ -54,7 +54,7 @@ const execute = async ({ type, value }, { tape, cursor }) => {
   }
 };
 
-const evaluate = async text => {
+const evaluate = async (text) => {
   let state = {
     tape: {},
     cursor: 0

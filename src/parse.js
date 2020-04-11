@@ -1,6 +1,6 @@
 const insns = ["+", "-", ">", "<", ".", ","];
 
-const getValue = text => {
+const getValue = (text) => {
   const value = [];
   let index = 0;
 
