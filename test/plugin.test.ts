@@ -1,4 +1,5 @@
 import prettier from "prettier";
+import plugin from "../src/plugin";
 
 declare global {
   // eslint-disable-next-line @typescript-eslint/no-namespace
@@ -11,10 +12,10 @@ declare global {
   }
 }
 
-function checkFormat(before, after) {
+function checkFormat(before: string, after: string) {
   const formatted = prettier.format(before, {
     parser: "brainfuck",
-    plugins: ["."]
+    plugins: [plugin]
   });
 
   return {
