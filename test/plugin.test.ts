@@ -1,6 +1,17 @@
-const prettier = require("prettier");
+import prettier from "prettier";
 
-const checkFormat = (before, after) => {
+declare global {
+  // eslint-disable-next-line @typescript-eslint/no-namespace
+  namespace jest {
+    // eslint-disable-next-line no-unused-vars, @typescript-eslint/no-unused-vars
+    interface Matchers<R> {
+      toChangeFormat(_actual: string): CustomMatcherResult;
+      toMatchFormat(): CustomMatcherResult;
+    }
+  }
+}
+
+function checkFormat(before, after) {
   const formatted = prettier.format(before, {
     parser: "brainfuck",
     plugins: ["."]
@@ -10,7 +21,7 @@ const checkFormat = (before, after) => {
     pass: formatted.trim() === after.trim(),
     message: () => `Expected:\n${after}\nReceived:\n${formatted}`
   };
-};
+}
 
 expect.extend({
   toChangeFormat: checkFormat,

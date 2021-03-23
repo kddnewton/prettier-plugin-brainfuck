@@ -1,6 +1,0 @@
-#!/usr/bin/env node
-
-const fs = require("fs");
-const evaluate = require("../src/evaluate");
-
-evaluate(fs.readFileSync(process.argv[2], "UTF-8"));

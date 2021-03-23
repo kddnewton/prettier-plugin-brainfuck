@@ -1,0 +1,16 @@
+{
+  "compilerOptions": {
+    "downlevelIteration": true,
+    "esModuleInterop": true,
+    "lib": [],
+    "module": "commonjs",
+    "moduleResolution": "node",
+    "outDir": "dist",
+    "resolveJsonModule": true,
+    "sourceMap": false,
+    "strict": true,
+    "target": "es2019"
+  },
+  "include": ["**/src/*"],
+  "exclude": ["**/test/*"]
+}
