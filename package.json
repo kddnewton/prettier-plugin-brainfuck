@@ -9,7 +9,7 @@
     "lint": "eslint --cache --ext .ts .",
     "parse": "ts-node bin/parse.ts",
     "prepublishOnly": "rm -f dist/* && yarn tsc --declaration",
-    "print": "ts-node node_modules/.bin/prettier --plugin=.",
+    "print": "ts-node bin/print.ts",
     "test": "jest"
   },
   "repository": {

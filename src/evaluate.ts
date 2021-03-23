@@ -1,10 +1,10 @@
 import readline from "readline";
 import { Insn, parse } from "./parser";
 
-type State = {
+interface State {
   tape: { [key: number]: number };
   cursor: number;
-};
+}
 
 function getChar(): Promise<number> {
   return new Promise((resolve) => {
