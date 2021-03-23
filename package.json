@@ -58,6 +58,9 @@
       ]
     }
   },
+  "eslintIgnore": [
+    "/dist/"
+  ],
   "jest": {
     "preset": "ts-jest",
     "testEnvironment": "node"
