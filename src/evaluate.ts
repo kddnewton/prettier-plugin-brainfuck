@@ -50,14 +50,11 @@ async function execute(insn: Insn, { tape, cursor }: State): Promise<State> {
   }
 }
 
-async function evaluate(text: string): Promise<State> {
-  let state: State = { tape: {}, cursor: 0 };
-
-  for (const insn of parse(text).value) {
-    state = await execute(insn, state);
-  }
-
-  return state;
+function evaluate(text: string): Promise<State> {
+  return parse(text).value.reduce(
+    (promise, insn) => promise.then((state) => execute(insn, state)),
+    Promise.resolve({ tape: {}, cursor: 0 })
+  );
 }
 
 export default evaluate;
