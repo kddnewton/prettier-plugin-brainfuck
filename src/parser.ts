@@ -2,9 +2,9 @@ import type { Parser } from "prettier";
 
 const simpleInsnTypes = ["+", "-", ">", "<", ".", ","] as const;
 
-type SimpleInsn = { type: typeof simpleInsnTypes, index: number };
-type LoopInsn = { type: "loop", start: number, end: number, value: Insn[] };
-type RootInsn = { type: "root", start: number, end: number, value: Insn[] };
+type SimpleInsn = { type: typeof simpleInsnTypes; index: number };
+type LoopInsn = { type: "loop"; start: number; end: number; value: Insn[] };
+type RootInsn = { type: "root"; start: number; end: number; value: Insn[] };
 
 export type Insn = SimpleInsn | LoopInsn | RootInsn;
 

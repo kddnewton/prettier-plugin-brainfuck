@@ -11,6 +11,7 @@ The format is based on [Keep a Changelog](http://keepachangelog.com/en/1.0.0/) a
 ### Added
 
 - Convert to TypeScript.
+
 ## [0.1.0] - 2020-04-11
 
 ### Added
