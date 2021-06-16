@@ -1,7 +1,7 @@
 import prettier, { Printer } from "prettier";
 import type { Insn } from "./parser";
 
-const { concat, group, hardline, indent, softline } = prettier.doc.builders;
+const { group, hardline, indent, softline } = prettier.doc.builders;
 
 const printer: Printer<Insn> = {
   print(path, _opts, print) {
@@ -16,15 +16,13 @@ const printer: Printer<Insn> = {
       case ",":
         return type;
       case "loop":
-        return group(
-          concat([
-            "[",
-            indent(concat([softline, concat(path.map(print, "value"))])),
-            concat([softline, "]"])
-          ])
-        );
+        return group([
+          "[",
+          indent([softline, path.map(print, "value")]),
+          [softline, "]"]
+        ]);
       case "root":
-        return concat([concat(path.map(print, "value")), hardline]);
+        return [path.map(print, "value"), hardline];
       default:
         throw new Error(`Unsupported node encountered: ${type}`);
     }
