@@ -4,8 +4,8 @@
   <a href="https://gitter.im/jlongster/prettier">
     <img alt="Gitter" src="https://img.shields.io/gitter/room/jlongster/prettier.svg?style=flat-square">
   </a>
-  <a href="https://github.com/kddeisz/prettier-plugin-brainfuck/actions">
-    <img alt="GitHub Actions" src="https://img.shields.io/github/workflow/status/kddeisz/prettier-plugin-brainfuck/Main?style=flat-square">
+  <a href="https://github.com/kddnewton/prettier-plugin-brainfuck/actions">
+    <img alt="GitHub Actions" src="https://img.shields.io/github/workflow/status/kddnewton/prettier-plugin-brainfuck/Main?style=flat-square">
   </a>
   <a href="https://www.npmjs.com/package/prettier-plugin-brainfuck">
     <img alt="NPM Version" src="https://img.shields.io/npm/v/prettier-plugin-brainfuck.svg?style=flat-square">
@@ -68,7 +68,7 @@ prettier --print-width 100 --write '**/*'
 
 ## Contributing
 
-Bug reports and pull requests are welcome on GitHub at https://github.com/kddeisz/prettier-plugin-brainfuck.
+Bug reports and pull requests are welcome on GitHub at https://github.com/kddnewton/prettier-plugin-brainfuck.
 
 ## License
 
