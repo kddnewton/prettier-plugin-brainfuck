@@ -1,6 +1,6 @@
 {
   "name": "prettier-plugin-brainfuck",
-  "version": "0.2.0",
+  "version": "1.0.0",
   "description": "prettier plugin for brainfuck",
   "main": "dist/plugin.js",
   "scripts": {
@@ -8,7 +8,7 @@
     "evaluate": "ts-node bin/evaluate.ts",
     "lint": "eslint --cache --ext .ts .",
     "parse": "ts-node bin/parse.ts",
-    "prepublishOnly": "rm -f dist/* && yarn tsc --declaration",
+    "prepublishOnly": "rm -f dist/* && yarn tsc",
     "print": "ts-node bin/print.ts",
     "test": "jest"
   },
