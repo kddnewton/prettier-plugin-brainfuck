@@ -1,60 +1,89 @@
-import readline from "readline";
-import { Insn, parse } from "./parser";
+import fs from "fs";
 
-interface State {
-  tape: { [key: number]: number };
-  cursor: number;
-}
+type Insn = (
+  | { op: "incr" | "decr" | "right" | "left" | "out" | "in" }
+  | { op: "jmpz" | "jmp"; target: number }
+);
 
-function getChar(): Promise<number> {
-  return new Promise((resolve) => {
-    const rl = readline.createInterface({
-      input: process.stdin,
-      output: process.stdout
-    });
+export function parse(text: string): Insn[] {
+  const insns: Insn[] = [];
+  const loops: number[] = [];
+  
+  let index = 0;
+  while (index < text.length) {
+    const char = text.charAt(index);
+    index += 1;
 
-    rl.question("> ", (input) => {
-      rl.close();
-
-      resolve(input.charCodeAt(0));
-    });
-  });
-}
-
-/* eslint-disable no-param-reassign, no-await-in-loop */
-async function execute(insn: Insn, { tape, cursor }: State): Promise<State> {
-  switch (insn.type) {
-    case "+":
-      return { tape: { ...tape, [cursor]: (tape[cursor] || 0) + 1 }, cursor };
-    case "-":
-      return { tape: { ...tape, [cursor]: (tape[cursor] || 0) - 1 }, cursor };
-    case ">":
-      return { tape, cursor: cursor + 1 };
-    case "<":
-      return { tape, cursor: cursor - 1 };
-    case ".":
-      process.stdout.write(String.fromCharCode(tape[cursor]));
-      return { tape, cursor };
-    case ",":
-      return { tape: { ...tape, [cursor]: await getChar() }, cursor };
-    case "loop":
-      while (tape[cursor]) {
-        for (const child of insn.value) {
-          ({ tape, cursor } = await execute(child, { tape, cursor }));
+    switch (char) {
+      case "+": insns.push({ op: "incr" }); break;
+      case "-": insns.push({ op: "decr" }); break;
+      case ">": insns.push({ op: "right" }); break;
+      case "<": insns.push({ op: "left" }); break;
+      case ".": insns.push({ op: "out" }); break;
+      case ",": insns.push({ op: "in" }); break;
+      case "[":
+        loops.push(insns.length);
+        insns.push({ op: "jmpz", target: -1 });
+        break;
+      case "]":
+        const start = loops.pop();
+        if (start === undefined) {
+          throw new SyntaxError("Unmatched end loop");
         }
-      }
 
-      return { tape, cursor };
-    default:
-      throw new Error(`Invalid instruction type: ${insn.type}`);
+        insns.push({ op: "jmp", target: start });
+        (insns[start] as Insn & { op: "jmpz" }).target = insns.length;
+        break;
+    }
   }
+
+  if (loops.length > 0) {
+    throw new SyntaxError("Unmatched start loop");
+  }
+
+  return insns;
 }
 
-function evaluate(text: string): Promise<State> {
-  return parse(text).value.reduce(
-    (promise, insn) => promise.then((state) => execute(insn, state)),
-    Promise.resolve({ tape: {}, cursor: 0 })
-  );
-}
+export function evaluate(text: string): Record<number, number> {
+  const insns = parse(text);
+  let pc = 0;
 
-export default evaluate;
+  const tape: Record<number, number> = {};
+  let cursor = 0;
+
+  const buffer = Buffer.alloc(1);
+
+  while (pc < insns.length) {
+    const insn = insns[pc++];
+
+    switch (insn.op) {
+      case "incr":
+        tape[cursor] = (tape[cursor] || 0) + 1;
+        break;
+      case "decr":
+        tape[cursor] = (tape[cursor] || 0) - 1;
+        break;
+      case "right":
+        cursor += 1;
+        break;
+      case "left":
+        cursor -= 1;
+        break;
+      case "out":
+        process.stdout.write(String.fromCharCode(tape[cursor]));
+        break;
+      case "in":
+        fs.readSync(0, buffer, 0, 1, null);
+        tape[cursor] = buffer.toString("ascii").charCodeAt(0);
+        break;
+      case "jmpz":
+        pc = tape[cursor] ? pc : insn.target;
+        break;
+      case "jmp":
+        pc = insn.target;
+        break;
+    }
+  }
+
+  return tape;
+}

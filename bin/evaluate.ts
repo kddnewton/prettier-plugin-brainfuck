@@ -1,4 +1,4 @@
 import fs from "fs";
-import evaluate from "../src/evaluate";
+import { evaluate } from "../src/evaluate";
 
-evaluate(fs.readFileSync(process.argv[2]).toString());
+evaluate(fs.readFileSync(process.argv[2], "utf-8"));
