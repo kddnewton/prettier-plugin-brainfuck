@@ -1,26 +1,37 @@
 import fs from "fs";
 
-type Insn = (
+type Insn =
   | { op: "incr" | "decr" | "right" | "left" | "out" | "in" }
-  | { op: "jmpz" | "jmp"; target: number }
-);
+  | { op: "jmpz" | "jmp"; target: number };
 
 export function parse(text: string): Insn[] {
   const insns: Insn[] = [];
   const loops: number[] = [];
-  
+
   let index = 0;
   while (index < text.length) {
     const char = text.charAt(index);
     index += 1;
 
     switch (char) {
-      case "+": insns.push({ op: "incr" }); break;
-      case "-": insns.push({ op: "decr" }); break;
-      case ">": insns.push({ op: "right" }); break;
-      case "<": insns.push({ op: "left" }); break;
-      case ".": insns.push({ op: "out" }); break;
-      case ",": insns.push({ op: "in" }); break;
+      case "+":
+        insns.push({ op: "incr" });
+        break;
+      case "-":
+        insns.push({ op: "decr" });
+        break;
+      case ">":
+        insns.push({ op: "right" });
+        break;
+      case "<":
+        insns.push({ op: "left" });
+        break;
+      case ".":
+        insns.push({ op: "out" });
+        break;
+      case ",":
+        insns.push({ op: "in" });
+        break;
       case "[":
         loops.push(insns.length);
         insns.push({ op: "jmpz", target: -1 });
