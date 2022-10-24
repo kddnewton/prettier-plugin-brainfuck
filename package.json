@@ -22,7 +22,7 @@
   },
   "homepage": "https://github.com/kddnewton/prettier-plugin-brainfuck#readme",
   "dependencies": {
-    "prettier": "^2.5.1"
+    "prettier": ">=3.0.0-alpha.3"
   },
   "devDependencies": {
     "eslint": "^8.4.1",
@@ -47,6 +47,9 @@
     "transform": {}
   },
   "prettier": {
+    "plugins": [
+      "./src/plugin.js"
+    ],
     "trailingComma": "none"
   }
 }

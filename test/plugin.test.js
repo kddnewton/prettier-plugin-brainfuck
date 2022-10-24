@@ -1,8 +1,8 @@
-import { format } from "prettier";
+import prettier from "prettier";
 import plugin from "../src/plugin.js";
 
-function checkFormat(before, after) {
-  const formatted = format(before, {
+async function checkFormat(before, after) {
+  const formatted = await prettier.format(before, {
     parser: "brainfuck",
     plugins: [plugin]
   });
@@ -20,14 +20,14 @@ expect.extend({
 
 describe("plugin", () => {
   test("does not wrap anything when it all fits", () => {
-    expect("++++----<<<<>>>>....,,,,[[[[]]]]").toMatchFormat();
+    return expect("++++----<<<<>>>>....,,,,[[[[]]]]").toMatchFormat();
   });
 
   test("wraps loops when it hits the breaks", () => {
     const inner = "++++----++++----++++----++++----++++----++++";
     const content = `++++----[${inner}${inner}${inner}${inner}]----++++`;
 
-    expect(content).toChangeFormat(
+    return expect(content).toChangeFormat(
       `++++----[\n  ${inner}${inner}${inner}${inner}\n]----++++`
     );
   });

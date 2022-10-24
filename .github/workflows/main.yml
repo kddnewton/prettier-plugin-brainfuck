@@ -1,7 +1,7 @@
 name: Main
 on:
 - push
-- pull_request_target
+- pull_request
 jobs:
   ci:
     name: CI
@@ -12,26 +12,11 @@ jobs:
     - uses: actions/checkout@master
     - uses: actions/setup-node@v2
       with:
-        node-version: 14.x
+        node-version: 18.x
         cache: yarn
     - name: Lint and test
       run: |
         yarn install --frozen-lockfile
-        yarn prepublishOnly
         yarn lint
-        yarn prettier --plugin . --check '**/*'
+        yarn prettier --check '**/*'
         yarn test
-  automerge:
-    name: AutoMerge
-    needs: ci
-    runs-on: ubuntu-latest
-    if: github.event_name == 'pull_request_target' && (github.actor == github.repository_owner || github.actor == 'dependabot[bot]')
-    steps:
-    - uses: actions/github-script@v3
-      with:
-        script: |
-          github.pulls.merge({
-            owner: context.payload.repository.owner.login,
-            repo: context.payload.repository.name,
-            pull_number: context.payload.pull_request.number
-          })

@@ -1,6 +1,7 @@
-import doc from "prettier/doc";
+import * as doc from "prettier/doc";
 
-const { group, hardline, indent, softline } = doc.builders;
+const builders = (doc.default ? doc.default : doc).builders;
+const { group, hardline, indent, softline } = builders;
 
 const printer = {
   print(path, _opts, print) {
