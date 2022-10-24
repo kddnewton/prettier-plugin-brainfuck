@@ -2,14 +2,12 @@
   "name": "prettier-plugin-brainfuck",
   "version": "1.0.0",
   "description": "prettier plugin for brainfuck",
-  "main": "dist/plugin.js",
+  "main": "src/plugin.js",
   "scripts": {
-    "compile": "tsc --noEmit",
-    "evaluate": "ts-node bin/evaluate.ts",
-    "lint": "eslint --cache --ext .ts .",
-    "parse": "ts-node bin/parse.ts",
-    "prepublishOnly": "rm -f dist/* && yarn tsc",
-    "print": "ts-node bin/print.ts",
+    "evaluate": "node bin/evaluate.js",
+    "lint": "eslint --cache .",
+    "parse": "node bin/parse.js",
+    "print": "node bin/print.js",
     "test": "jest"
   },
   "repository": {
@@ -26,44 +24,25 @@
     "prettier": "^2.5.1"
   },
   "devDependencies": {
-    "@types/jest": "^27.0.0",
-    "@types/node": "^18.0.0",
-    "@types/prettier": "^2.3.1",
-    "@typescript-eslint/eslint-plugin": "^5.6.0",
-    "@typescript-eslint/parser": "^5.6.0",
     "eslint": "^8.4.1",
     "eslint-config-prettier": "^8.4.0",
-    "jest": "^27.4.3",
-    "ts-jest": "^27.1.1",
-    "ts-node": "^10.0.0",
-    "typescript": "^4.3.5"
+    "jest": "^27.4.3"
   },
   "eslintConfig": {
     "extends": [
-      "plugin:@typescript-eslint/eslint-recommended",
-      "plugin:@typescript-eslint/recommended",
+      "eslint:recommended",
       "prettier"
     ],
     "env": {
       "jest": true,
       "node": true
     },
-    "rules": {
-      "no-unused-vars": [
-        "error",
-        {
-          "argsIgnorePattern": "^_",
-          "varsIgnorePattern": "^_"
-        }
-      ]
+    "parserOptions": {
+      "ecmaVersion": 2020
     }
   },
-  "eslintIgnore": [
-    "/dist/"
-  ],
   "jest": {
-    "preset": "ts-jest",
-    "testEnvironment": "node"
+    "transform": {}
   },
   "prettier": {
     "trailingComma": "none"

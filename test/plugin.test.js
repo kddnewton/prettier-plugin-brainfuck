@@ -1,18 +1,7 @@
-import prettier from "prettier";
-import plugin from "../src/plugin";
+const prettier = require("prettier");
+const plugin = require("../src/plugin");
 
-declare global {
-  // eslint-disable-next-line @typescript-eslint/no-namespace
-  namespace jest {
-    // eslint-disable-next-line no-unused-vars, @typescript-eslint/no-unused-vars
-    interface Matchers<R> {
-      toChangeFormat(_actual: string): CustomMatcherResult;
-      toMatchFormat(): CustomMatcherResult;
-    }
-  }
-}
-
-function checkFormat(before: string, after: string) {
+function checkFormat(before, after) {
   const formatted = prettier.format(before, {
     parser: "brainfuck",
     plugins: [plugin]

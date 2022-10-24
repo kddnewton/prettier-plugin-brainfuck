@@ -1,9 +1,8 @@
-import prettier, { Printer } from "prettier";
-import type { Insn } from "./parser";
+const prettier = require("prettier");
 
 const { group, hardline, indent, softline } = prettier.doc.builders;
 
-const printer: Printer<Insn> = {
+const printer = {
   print(path, _opts, print) {
     const { type } = path.getValue();
 
@@ -29,4 +28,4 @@ const printer: Printer<Insn> = {
   }
 };
 
-export default printer;
+module.exports = printer;

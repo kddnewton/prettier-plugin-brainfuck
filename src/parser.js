@@ -1,26 +1,13 @@
-import type { Parser } from "prettier";
+const simpleInsnTypes = ["+", "-", ">", "<", ".", ","];
 
-const simpleInsnTypes = ["+", "-", ">", "<", ".", ","] as const;
-
-type SimpleInsn = { type: typeof simpleInsnTypes; index: number };
-type LoopInsn = { type: "loop"; start: number; end: number; value: Insn[] };
-type RootInsn = { type: "root"; start: number; end: number; value: Insn[] };
-
-export type Insn = SimpleInsn | LoopInsn | RootInsn;
-
-// eslint-disable-next-line @typescript-eslint/no-explicit-any
-function isSimpleInsnType(type: any): type is SimpleInsn["type"] {
-  return simpleInsnTypes.includes(type);
-}
-
-function getValue(text: string): Insn[] {
-  const value: Insn[] = [];
+function getValue(text) {
+  const value = [];
   let index = 0;
 
   while (index < text.length) {
     const char = text.charAt(index);
 
-    if (isSimpleInsnType(char)) {
+    if (simpleInsnTypes.includes(char)) {
       value.push({ type: char, index });
       index += 1;
     } else if (char === "[") {
@@ -54,11 +41,11 @@ function getValue(text: string): Insn[] {
   return value;
 }
 
-export function parse(text: string): RootInsn {
+function parse(text) {
   return { type: "root", value: getValue(text), start: 0, end: text.length };
 }
 
-const parser: Parser<Insn> = {
+const parser = {
   astFormat: "brainfuck",
   parse(text) {
     return parse(text);
@@ -77,4 +64,5 @@ const parser: Parser<Insn> = {
   }
 };
 
-export default parser;
+module.exports = parser;
+module.exports.parse = parse;
