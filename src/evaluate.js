@@ -1,12 +1,8 @@
-import fs from "fs";
+import { readSync } from "node:fs";
 
-type Insn =
-  | { op: "incr" | "decr" | "right" | "left" | "out" | "in" }
-  | { op: "jmpz" | "jmp"; target: number };
-
-export function parse(text: string): Insn[] {
-  const insns: Insn[] = [];
-  const loops: number[] = [];
+export function parse(text) {
+  const insns = [];
+  const loops = [];
 
   let index = 0;
   while (index < text.length) {
@@ -36,15 +32,16 @@ export function parse(text: string): Insn[] {
         loops.push(insns.length);
         insns.push({ op: "jmpz", target: -1 });
         break;
-      case "]":
+      case "]": {
         const start = loops.pop();
         if (start === undefined) {
           throw new SyntaxError("Unmatched end loop");
         }
 
         insns.push({ op: "jmp", target: start });
-        (insns[start] as Insn & { op: "jmpz" }).target = insns.length;
+        insns[start].target = insns.length;
         break;
+      }
     }
   }
 
@@ -55,11 +52,11 @@ export function parse(text: string): Insn[] {
   return insns;
 }
 
-export function evaluate(text: string): Record<number, number> {
+export function evaluate(text) {
   const insns = parse(text);
   let pc = 0;
 
-  const tape: Record<number, number> = {};
+  const tape = {};
   let cursor = 0;
 
   const buffer = Buffer.alloc(1);
@@ -84,7 +81,7 @@ export function evaluate(text: string): Record<number, number> {
         process.stdout.write(String.fromCharCode(tape[cursor]));
         break;
       case "in":
-        fs.readSync(0, buffer, 0, 1, null);
+        readSync(0, buffer, 0, 1, null);
         tape[cursor] = buffer.toString("ascii").charCodeAt(0);
         break;
       case "jmpz":

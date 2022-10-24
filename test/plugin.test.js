@@ -1,19 +1,8 @@
-import prettier from "prettier";
-import plugin from "../src/plugin";
+import * as prettier from "prettier";
+import plugin from "../src/plugin.js";
 
-declare global {
-  // eslint-disable-next-line @typescript-eslint/no-namespace
-  namespace jest {
-    // eslint-disable-next-line no-unused-vars, @typescript-eslint/no-unused-vars
-    interface Matchers<R> {
-      toChangeFormat(_actual: string): CustomMatcherResult;
-      toMatchFormat(): CustomMatcherResult;
-    }
-  }
-}
-
-function checkFormat(before: string, after: string) {
-  const formatted = prettier.format(before, {
+async function checkFormat(before, after) {
+  const formatted = await prettier.format(before, {
     parser: "brainfuck",
     plugins: [plugin]
   });
@@ -31,14 +20,14 @@ expect.extend({
 
 describe("plugin", () => {
   test("does not wrap anything when it all fits", () => {
-    expect("++++----<<<<>>>>....,,,,[[[[]]]]").toMatchFormat();
+    return expect("++++----<<<<>>>>....,,,,[[[[]]]]").toMatchFormat();
   });
 
   test("wraps loops when it hits the breaks", () => {
     const inner = "++++----++++----++++----++++----++++----++++";
     const content = `++++----[${inner}${inner}${inner}${inner}]----++++`;
 
-    expect(content).toChangeFormat(
+    return expect(content).toChangeFormat(
       `++++----[\n  ${inner}${inner}${inner}${inner}\n]----++++`
     );
   });

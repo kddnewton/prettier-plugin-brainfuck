@@ -1,5 +1,5 @@
-import parser from "./parser";
-import printer from "./printer";
+import parser from "./parser.js";
+import printer from "./printer.js";
 
 const plugin = {
   languages: [
@@ -21,4 +21,4 @@ const plugin = {
   }
 };
 
-export = plugin;
+export default plugin;

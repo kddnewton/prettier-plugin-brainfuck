@@ -1,9 +1,8 @@
-import prettier, { Printer } from "prettier";
-import type { Insn } from "./parser";
+import * as doc from "prettier/doc";
 
-const { group, hardline, indent, softline } = prettier.doc.builders;
+const { group, hardline, indent, softline } = doc.builders;
 
-const printer: Printer<Insn> = {
+const printer = {
   print(path, _opts, print) {
     const { type } = path.getValue();
 
