@@ -1,4 +1,4 @@
-const fs = require("node:fs");
-const { evaluate } = require("../src/evaluate");
+import { readFileSync } from "node:fs";
+import { evaluate } from "../src/evaluate";
 
-evaluate(fs.readFileSync(process.argv[2], "utf-8"));
+evaluate(readFileSync(process.argv[2], "utf-8"));

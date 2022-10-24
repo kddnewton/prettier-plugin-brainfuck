@@ -1,8 +1,8 @@
-const prettier = require("prettier");
-const plugin = require("../src/plugin");
+import { format } from "prettier";
+import plugin from "../src/plugin.js";
 
 function checkFormat(before, after) {
-  const formatted = prettier.format(before, {
+  const formatted = format(before, {
     parser: "brainfuck",
     plugins: [plugin]
   });

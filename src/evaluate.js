@@ -1,6 +1,6 @@
-const fs = require("node:fs");
+import { readSync } from "node:fs";
 
-function parse(text) {
+export function parse(text) {
   const insns = [];
   const loops = [];
 
@@ -52,7 +52,7 @@ function parse(text) {
   return insns;
 }
 
-function evaluate(text) {
+export function evaluate(text) {
   const insns = parse(text);
   let pc = 0;
 
@@ -81,7 +81,7 @@ function evaluate(text) {
         process.stdout.write(String.fromCharCode(tape[cursor]));
         break;
       case "in":
-        fs.readSync(0, buffer, 0, 1, null);
+        readSync(0, buffer, 0, 1, null);
         tape[cursor] = buffer.toString("ascii").charCodeAt(0);
         break;
       case "jmpz":
@@ -95,5 +95,3 @@ function evaluate(text) {
 
   return tape;
 }
-
-module.exports = { parse, evaluate };

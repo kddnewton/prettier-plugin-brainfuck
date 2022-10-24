@@ -41,7 +41,7 @@ function getValue(text) {
   return value;
 }
 
-function parse(text) {
+export function parse(text) {
   return { type: "root", value: getValue(text), start: 0, end: text.length };
 }
 
@@ -64,5 +64,4 @@ const parser = {
   }
 };
 
-module.exports = parser;
-module.exports.parse = parse;
+export default parser;

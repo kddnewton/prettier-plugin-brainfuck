@@ -1,5 +1,5 @@
-const parser = require("./parser");
-const printer = require("./printer");
+import parser from "./parser.js";
+import printer from "./printer.js";
 
 const plugin = {
   languages: [
@@ -21,4 +21,4 @@ const plugin = {
   }
 };
 
-module.exports = plugin;
+export default plugin;

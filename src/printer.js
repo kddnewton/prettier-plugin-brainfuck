@@ -1,6 +1,6 @@
-const prettier = require("prettier");
+import doc from "prettier/doc";
 
-const { group, hardline, indent, softline } = prettier.doc.builders;
+const { group, hardline, indent, softline } = doc.builders;
 
 const printer = {
   print(path, _opts, print) {
@@ -28,4 +28,4 @@ const printer = {
   }
 };
 
-module.exports = printer;
+export default printer;
