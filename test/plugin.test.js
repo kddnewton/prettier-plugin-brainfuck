@@ -1,4 +1,4 @@
-import prettier from "prettier";
+import * as prettier from "prettier";
 import plugin from "../src/plugin.js";
 
 async function checkFormat(before, after) {
